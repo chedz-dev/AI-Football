@@ -8,7 +8,6 @@ public class Ball extends Entity {
 	public Ball(int x, int y, ID id, Image sprite, Handler handler) {
 		super(x, y, id, sprite, handler);
 		maxVel = 0;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setGrabStatus(Boolean flag) {

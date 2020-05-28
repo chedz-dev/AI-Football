@@ -28,14 +28,8 @@ public class Main extends Canvas implements Runnable {
 		this.setPreferredSize(new Dimension (Cons.CANVAS_X, Cons.CANVAS_Y));
 		new Window (this);
 		SpriteBank.loadSprites();
-		createHandler ();
-		tick();
-		render();
-		tick();
-		render();
-		tick();
-		render();
-		tick();
+		createHandler();
+		createBufferStrategy(Cons.BUFFER_STRATEGY_SIZE);
 		render();
 	}
 	
@@ -72,37 +66,36 @@ public class Main extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		
-		long currenttime;
-		long previoustime = System.nanoTime();
-		long passedtime;
+		long currentTime;
+		long previousTime = System.nanoTime();
+		long passedTime;
 		int frames = 0;
-		double unprocessedseconds = 0;
-		double secondspertick = 1 / 60.0;
-		int tickcount = 0;
+		double unprocessedSeconds = 0;
+		double secondsPerTick = 1 / 60.0;
+		int tickCount = 0;
 		boolean ticked = false;     
 
 		while (running) {
-		    currenttime = System.nanoTime();
-		    passedtime = currenttime - previoustime;
-		    previoustime = currenttime;
-		    unprocessedseconds += passedtime / 1000000000.0;
+		    currentTime = System.nanoTime();
+		    passedTime = currentTime - previousTime;
+		    previousTime = currentTime;
+		    unprocessedSeconds += passedTime / 1000000000.0;
 
-		    while (unprocessedseconds > secondspertick) {
+		    while (unprocessedSeconds > secondsPerTick) {
 		        tick();
-		        unprocessedseconds -= secondspertick;
+		        unprocessedSeconds -= secondsPerTick;
 		        ticked = true;
-		        tickcount++;
-		        if (tickcount % 60 == 0) {
+		        tickCount++;
+		        if (tickCount % 60 == 0) {
 		            System.out.println(frames + " FPS");
-		            previoustime += 1000;
+		            previousTime += 1000;
 		            frames = 0;
 		        }
 		    }
 		    if (ticked) {
 		        render();
 		        frames++;
-		    }
-		    render();           
+		    }         
 		    frames++;
 		}
 	}
@@ -114,15 +107,11 @@ public class Main extends Canvas implements Runnable {
 	private void render () {
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
-			this.createBufferStrategy(3);
+			this.createBufferStrategy(Cons.BUFFER_STRATEGY_SIZE);
 			return;
 		}
 		
-		Graphics g =bs.getDrawGraphics();
-		
-		
-		
-		handler.render(g);
+		Graphics g = bs.getDrawGraphics();
 		
 		if(g instanceof Graphics2D)
 	      {
@@ -143,8 +132,7 @@ public class Main extends Canvas implements Runnable {
 	        g2.setColor(Color.RED);
 	        g2.drawString(golRojo.toString(),Cons.CANVAS_X/2 + 25,40); 
 	       }
-		
-		g.dispose();
+		handler.render(g);
 		bs.show();
 	}
 	

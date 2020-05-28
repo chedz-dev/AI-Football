@@ -5,25 +5,22 @@ public class Handler {
 	LinkedList<GameObject> object = new LinkedList<GameObject>();
 	
 	public void tick() {
-		for(int i = 0 ; i < object.size() ; i++) {
-			GameObject tempObject = object.get(i);
+		for(GameObject tempObject : object) {
 			tempObject.tick();
 		}
 	}
 	
 	public void render (Graphics g) {
-		for(int i = 0 ; i < object.size() ; i++) {
-			GameObject tempObject = object.get(i);
-			
+		for(GameObject tempObject : object) {
 			tempObject.render(g);
 		}
 	}
 	
-	public void addObject(GameObject object) {
-		this.object.add(object);
+	public void addObject(GameObject obj) {
+		object.add(obj);
 	}
 	
-	public void removeObject(GameObject object) {
-		this.object.remove(object);
+	public void removeObject(GameObject obj) {
+		object.remove(obj);
 	}
 }

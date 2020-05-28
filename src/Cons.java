@@ -19,4 +19,7 @@ public class Cons {
 	
 	public static final int BTN_SIZE_X = 100;
 	public static final int BTN_SIZE_Y = 50;
+	
+	//BufferStragetegy size
+	public static final int BUFFER_STRATEGY_SIZE = 2;
 }
